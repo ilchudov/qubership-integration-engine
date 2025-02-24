@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-package org.qubership.integration.platform.engine.camel.processors.context.propagation;
+package org.qubership.integration.platform.engine.camel.processors;
 
-import org.qubership.integration.platform.engine.camel.processors.OptionalProcessorProxy;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.qubership.integration.platform.engine.model.constants.CamelConstants.Properties;
 import org.springframework.stereotype.Component;
 
-
+@Component
 @Slf4j
-@Component("contextPropagationProcessor")
-public class ContextPropagationProcessorProxy extends OptionalProcessorProxy {
-
-    @Autowired
-    public ContextPropagationProcessorProxy(
-        @Qualifier("contextPropagationProcessorImpl") Optional<Processor> processor
-    ) {
-        super(processor);
+public class SplitAsyncProcessor implements Processor {
+    @Override
+    public void process(Exchange exchange) throws Exception {
+        exchange.removeProperty(Properties.CHAIN_TIME_OUT_AFTER);
     }
 }
